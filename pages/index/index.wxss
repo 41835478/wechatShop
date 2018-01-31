@@ -1,0 +1,31 @@
+@import "../youzan.wxss";
+page{background-color:rgb(247, 245, 244);margin-left:auto;}
+.zan-tag + .zan-tag {
+  margin-left: 10px;
+}
+.deadline{
+  color:#dfdfdf;text-align:center;font-size:22rpx;margin:50rpx 0;
+}
+.red-text{
+  height:60rpx;
+  line-height: 60rpx;
+  margin:16rpx auto;padding:14rpx 0;font-size:34rpx;color:#ff4d65;text-align:center;background:#ffffff;font-weight:bold
+}
+.app .js-list-container > .goods-list-item{
+  margin-bottom: 0px;
+  background-color: rgb(255, 255, 255);
+  height: 424rpx;
+  font-family: Arial, 微软雅黑, Microsoft Yahei;
+  font-size: 12px;
+  text-size-adjust: 100%;
+  width: 49%;
+  display: inline-block;
+  padding-left: 0!important;
+  position: relative; 
+  text-decoration: inherit;padding:0 1%;
+}
+
+.app .js-list-container > .goods-list-item .list-img{
+  height: 320rpx;width: 100%;margin: 0 auto;display: block;
+  vertical-align: middle;
+}

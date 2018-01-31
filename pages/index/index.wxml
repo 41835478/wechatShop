@@ -1,0 +1,152 @@
+<view class="app">
+
+<!-- 轮播图 -->
+  <template name="zcCarousel">
+    <swiper indicator-dots="true" circular="true" autoplay="{{data.customFeature.autoplay}}" vertical="{{data.customFeature.vertical}}" interval="{{data.customFeature.interval*1000}}" duration="750" style="{{data.style}}">
+      <block wx:for="{{data.content}}" wx:key="">
+        <swiper-item data-event-params="{{item.eventParams}}" catchtap="{{item.eventHandler}}">
+          <image class="swiper-item" src="{{item.pic}}"/>
+          <view  wx:if="{{item.eventHandler == 'tapVideoPlayHandler'}}" class="carousel-video-play icon-play ico-moon"></view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </template>
+
+<view class="ele-container">
+  <template is="zcCarousel" data="{{data:carousel1}}"></template>
+</view>
+<!-- 轮播图 -->
+
+
+<!--搜索框-->
+<template name="zcFreeVessel2">
+  <view class="element free-vessel" style="{{data.style}}" data-event-params="{{data.eventParams}}" catchtap="{{data.eventHandler}}">
+    <wxs module="pictureWxsModule">
+      var isArray = function(array) {
+        return array.join instanceof Function;
+      }
+      module.exports.isArray = isArray;
+    </wxs>
+
+    <template name="zcPicture">
+      <view class="element picture" style="{{data.style}}" data-event-params="{{data.eventParams}}" data-imgArr="{{data.content}}" catchtap="{{data.eventHandler}}">
+        <image src="{{data.content}}" mode="scaleToFill"></image>
+      </view>
+    </template>
+
+    <view class="ele-container">
+      <template is="zcPicture" data="{{data:data.content[0]}}"></template>
+    </view>
+
+  </view>
+</template>
+
+<view class="ele-container">
+  <template is="zcFreeVessel2" data="{{data:free_vessel2}}"></template>
+</view>
+<!--搜索框- end -->
+
+<!-- 分类图标 -->
+<template name="zcAlbum">
+  <view class="element album {{data.html_mode}}" style="{{data.style}}">
+    <view class="album-container background-ele clearfix" style="{{data.ul_style}} ">
+      <view wx:for="{{data.li}}"
+            class="{{item.li_class}}"
+            style="{{item.li_style}}"
+            wx:key=""
+            data-event-params="{{item.eventParams}}"
+            catchtap="{{item.eventHandler}}">
+        <image src="{{item.pic}}" style="{{item.img_style}}" mode="scaleToFill"></image>
+        <text class="title">{{item.title}}</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<view class="ele-container">
+  <template is="zcAlbum" data="{{data:album3}}"></template>
+</view>
+<!-- 分类图标 -->
+
+<!--积分菜品-->
+<!-- <template name="zcTitle">
+  <view class="element title-ele {{ 'title-mode'+ (data.mode ? data.mode : '') }}" mode="{{data.mode}}" style="{{data.style}}" data-event-params="{{data.eventParams}}" catchtap="{{data.eventHandler}}">
+    <view class="title-content">
+      <view class="title-text">
+        <text class="mark" style="{{'background-color: ' + data.markColor}}"></text>
+        <text class="js-text">{{data.content}}</text>
+      </view>
+    </view>
+  </view>
+</template> -->
+
+<!-- <view class="ele-container">
+  <template is="zcTitle" data="{{data:title_ele4}}"></template>
+</view> -->
+<!--积分菜品-->
+<view style='' class="red-text"><text class="js-text"> 店铺推荐 </text></view>
+
+<!--商品列表-->
+<template name="zcGoodsList">
+<view style='margin-top:8px;'></view>
+  <scroll-view class="element goods-list scroll-ele goods-list-mode-1"
+               data-param="{{data.param}}"
+               data-compid="{{data.compId}}"
+               data-type="goods-list"
+               style="{{data.style}}"
+               scroll-y="{{true}}"
+               data-curpage="{{data.curpage}}"
+               bindscrolltolower="goodsScrollFunc"
+               style='height:1000rpx;'
+               lower-threshold="10">
+    <view class="js-list-container" data-list-index="0">
+
+        <view wx:for="{{data.goods_data}}" class="goods-list-item background-ele router js-to-detail" catchtap="turnToGoodsDetail" style="">
+          <view class="inner-content" style='display: inline-block;vertical-align: middle;height: auto;position: relative; width: 98%;text-decoration: inherit;border-radius: inherit;z-index: 1; white-space: nowrap;' data-id="{{item.goodsId}}" bindtap="gotoDetail">
+            <image class="list-img" src="{{item.image}}" style="" mode="aspectFit"></image>
+            <view class="title-container" style="padding-left:12rpx">
+              <view class="title">{{item.title}}</view>
+              <block >
+                <view style="width: 100%;">
+                  <text class="price">¥ {{item.price}}</text>
+                  <text class="sales">销量：{{item.sales}}</text>
+                </view>
+              </block>
+            </view>
+          </view>
+        </view>
+    </view>
+    <view class="loading-btn" hidden="{{hasMore != 1}}" data-compid="{{data.compId}}">
+      <!-- 加载更多 -->
+      <import src="../zan/loadmore/index.wxml" />
+      <template is="zan-loadmore" data="{{ loading: true }}"></template>
+    </view>
+
+    <view hidden="{{hasMore != 2}}">
+      <view class="deadline" style=''>———————— 我是有底线的 ————————</view>
+    </view>
+  </scroll-view>
+
+</template>
+
+<view class="ele-container">
+  <template is="zcGoodsList" data="{{data:goods_list5, hasMore:hasMore}}"></template>
+
+</view>
+
+<!--商品列表-->
+<template name="zcSuspension">
+
+  <view class="element suspension" data-compid="suspension1" style="{{data.style}}bottom: {{data.suspension_bottom}}rpx;" >
+      <view class="suspension-item" data-type="service" style="{{data.list_style}}">
+        <icon class="ico-moon icon-service2 suspension-service">
+          <contact-button type="default-dark" size="20" session-from="suspension"></contact-button>
+        </icon>
+      </view>
+      <view class="suspension-item" data-type="top" catchtap="scrollPageTop" style="{{data.list_style}}">
+        <icon class="ico-moon icon-top"></icon>
+      </view>
+  </view>
+</template>
+<template is="zcSuspension" data="{{data:suspension}}"></template>
+</view>

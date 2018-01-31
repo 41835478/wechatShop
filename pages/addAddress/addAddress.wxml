@@ -1,0 +1,51 @@
+<import src="../zan/field/index.wxml" />
+
+<view class="container" style='padding:20rpx 0'>
+  <view class="zan-panel">
+    <template
+      is="zan-field"
+      data="{{ ...config.base.name, value:name, error:false }}"></template>
+    <template
+      is="zan-field"
+      data="{{ ...config.base.tel, value:contact,error:false }}"></template>
+    
+    
+    <view class="zan-cell zan-field">
+      <view class="zan-cell__hd zan-field__title">选择区域</view>
+      <picker
+        mode="selector"
+        class="zan-field__input zan-cell__bd"
+        range="{{ province }}"
+        value="{{ provinceIndex }}"
+        bindchange="onProvinceChange"
+      >
+        {{ province[provinceIndex] }}
+      </picker>
+      <picker
+        mode="selector"
+        class="zan-field__input zan-cell__bd"
+        range="{{ city }}"
+        value="{{ cityIndex }}"
+        bindchange="onCityChange"
+      >
+        {{ city[cityIndex] }}
+      </picker>
+      <picker
+        mode="selector"
+        class="zan-field__input zan-cell__bd"
+        range="{{ area }}"
+        value="{{ areaIndex }}"
+        bindchange="onAreaChange"
+      >
+        {{ area[areaIndex] }}
+      </picker>
+    </view>
+
+    <template
+      is="zan-field"
+      data="{{ ...config.base.address }}"></template>
+  </view>
+  <view class="zan-btns" style="width:90%;">
+      <button class="zan-btn zan-btn--danger" bindtap="addAddress" style='color:#ffffff;background:#ff4d65;height:40px;line-height:40px'>保存</button>
+  </view>
+</view>

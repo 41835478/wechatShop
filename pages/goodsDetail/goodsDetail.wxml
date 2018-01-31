@@ -1,0 +1,191 @@
+<view class="goods-detail-wrap" hidden="{{ page_hidden }}">
+  <view class="goods-detail-nav" style='display:none'>
+    <view>
+      <view class="pull-right ico-moon icon-notebook" bindtap="goToMyOrder"></view>
+      <view class="pull-right ico-moon icon-shoppingcart" bindtap="goToShoppingCart">
+      </view>
+    </view>
+  </view>
+<import src="/pages/zan/dialog/index.wxml" />
+  <view class="goods-detail-content">
+    <view class="goods-detail-section">
+      <view class="goods-cover-container" wx:if="{{ !goodsInfo.img_urls }}">
+        <image src="{{ goodsInfo.cover }}" mode="aspectFill"></image>
+      </view>
+
+      <view class="slick-carousel-container" wx:else>
+        <swiper indicator-dots="{{ indicatorDots }}" circular="true"
+          autoplay="true" interval="5000" duration="1000">
+          <block wx:for="{{ goodsInfo.img_urls }}" wx:key="">
+            <swiper-item>
+              <image src="{{ item }}" mode="aspectFit" class="slide-image"></image>
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+
+      <view class="goods-header">
+        <view class="goods-title">{{ goodsInfo.title }}</view>
+        <view class="goods-destription" style="font-size:22rpx;">{{ goodsInfo.destription }}</view>
+        <view class="goods-price">
+          <view class="goods-current-price">
+            <text style="margin-right:3px;font-size:18px;">¥</text><text style="font-weight:bold; font-size:20px;">20.00</text>
+            <text class="virtualPrice">{{'￥' + '30.00' }}</text>
+          </view>
+          <!-- <view class="goods-price-discount" wx:if="{{ priceDiscountStr != '' }}">{{ priceDiscountStr }}</view> -->
+        </view>
+
+        <view class="goods-models" wx:if="{{ goodsInfo.model_items.length }}">
+          <view class="goods-model-item" wx:for="{{ goodsInfo.model }}" wx:key="" hidden = "{{!item.subModelName}}">
+            <text class="goods-model-cate">{{ item.name }}</text>
+            <text class="goods-model-detail">{{ modelStrs[item.id] }}</text>
+          </view>
+        </view>
+
+        <view class="goods-other-info" wx:if="{{ goodsInfo.goods_type == 0 }}">
+          <view>包邮</view>
+          <view>库存: {{goodsInfo.stock}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view style="padding: 20rpx;text-align:center;background:#f4f4f4;color:#b2b2b2;font-size:24rpx;" hidden="{{displayComment}}">
+      <view class="line"></view>
+      <view class="ico-moon icon-good-comment goods-ico"></view><view style="display: inline-block;vertical-align:middle;margin-right:4px;">评价</view>
+      <view class="line" ></view>
+    </view>
+    <view class="goods-detail-section" hidden="{{displayComment}}">
+      <view class="comment-title">
+      <view style="border-bottom: 1px solid #f4f4f4;padding-bottom:20rpx;">评价 ({{ commentNums[0] || 0 }})</view>
+      </view>
+
+      <!--评价demo-->
+      <view class="block-item">
+        <view wx:if="{{ commentExample }}">
+          <view class="comment-item">
+            <view>
+              <image class="comment-user-photo" src="{{ commentExample.buyer_headimgurl || defaultPhoto }}"></image>
+              <text class="commentPersonName">{{ commentExample.buyer_nickname }}</text>
+            </view>
+            <view class="comment-date">{{ commentExample.add_time }}</view>
+            <view class="comment-content">{{ commentExample.assess_info.content }}</view>
+            <view wx:if="{{ commentExample.assess_info.has_img }}" class="comPage-comment-pics">
+              <image wx:for="{{ commentExample.assess_info.img_arr }}" wx:for-item="imgSrc" src="{{ imgSrc }}" wx:key="" data-src="{{ imgSrc }}" data-srcarr="{{ commentExample.assess_info.img_arr }}" catchtap="clickPlusImages"></image>
+            </view>
+          </view>
+          <view style="text-align:center;">
+            <button class="btn lookAllComments" bindtap="goToCommentPage">查看全部评价</button>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <!--详情-->
+    <view style="padding: 20rpx;text-align:center;background:#f4f4f4;color:#b2b2b2;font-size:24rpx;">
+      <view class="line"></view>
+      <view class="ico-moon icon-good-detail goods-ico"></view><view style="display: inline-block;vertical-align:middle;margin-right:4px;">详情</view>
+      <view class="line"></view>
+    </view>
+
+    <view class="goods-detail-section">
+      <view class="comment-title"><view style="border-bottom: 1px solid #f4f4f4;padding-bottom:20rpx;">产品详情</view></view>
+      <view class="goods-details">
+        <block wx:for-items="{{goodsInfo.detail}}" wx:key="name">
+          <image class="image_detail" src="{{item}}" />
+        </block>
+      </view>
+    </view>
+
+  </view>
+
+  <view class="goods-bottom-opt">
+      <view class="flex-sub-box-3">
+        <view class="goods-opt-item flex-sub-box-2">
+          <view class="ico-moon icon-service2">
+            <contact-button type="default-dark" size="20" session-from="goodsDetail"></contact-button>
+          </view>
+          <view>客服</view>
+        </view>
+        <view class="goods-opt-item flex-sub-box-2" bindtap="goToHomepage">
+          <text class="ico-moon icon-shoppingCart2"></text>
+          <view>购物车</view>
+        </view>
+      </view>
+      <view class="flex-sub-box-3">
+        <label class="btn addToShoppingCart" bindtap="showAddToShoppingCart" style='background:#FF7F50'>加入购物车</label>
+      </view>
+      <view class="flex-sub-box-3">
+        <label class="btn buy-goods-directly" bindtap="showBuyDirectly" style='background:#f24d65'>立即购买</label>
+      </view>
+  </view>
+</view>
+
+<view id="payDialog" class="page-dialog-wrap" hidden="{{ addToShoppingCartHidden }}">
+  <view class="page-bottom-dialog">
+    <view class="page-bottom-content">
+      <view class="pay-close-dialog page-dialog-close" bindtap="hiddeAddToShoppingCart">×</view>
+      <view class="dialog-block-item">
+        <view class="thumb">
+          <view class="thumb-wrap">
+            <image class="pay-goods-cover" src="{{ selectModelInfo.imgurl || goodsInfo.cover }}"></image>
+          </view>
+        </view>
+
+        <view class="pay-goods-baseinfo">
+          <view class="pay-goods-title ellipsis">{{ goodsInfo.title }}</view>
+          <view class="pay-goods-price">
+            <view class="pay-current-price">
+              ¥ <text style="font-weight:bold; font-size:18px;">{{ selectModelInfo.price }}</text>
+                <text class="virtualPrice" wx:if="{{ isShowVirtualPrice && selectModelInfo.virtualPrice != 0 }}">￥{{selectModelInfo.virtualPrice}}</text>
+            </view>
+          </view>
+          <view wx:if="{{selectModelInfo.models_text}}" class="pay-checked-text clearfix">已选：{{ selectModelInfo.models_text }}</view>
+        </view>
+      </view>
+
+      <view class="dialog-block-item" hidden="{{ !goodsInfo.model_items.length }}">
+        <view class="pay-goods-models">
+          <view wx:for="{{ goodsInfo.model }}" wx:for-item="model" wx:for-index="modelIndex" wx:key="">
+            <text class="model-title">{{ model.name }}</text>
+            <label class="pills-list">
+              <label wx:for="{{ model.subModelName }}"
+                     wx:for-item="name"
+                     wx:key=""
+                     data-model-index="{{ modelIndex }}"
+                     data-submodel-index="{{ index }}"
+                     class="subModel {{ selectModelInfo.models[modelIndex] == model.subModelId[index] ? 'select' : '' }}"
+                     data-submodel-id="{{ model.subModelId[index] }}" bindtap="selectSubModel">{{ name }}</label>
+            </label>
+          </view>
+        </view>
+      </view>
+
+      <view class="dialog-block-item" style="padding-left:10px;padding-right:10px;font-size:30rpx;">
+        <view class="clearfix">
+          <text>数量</text>
+          <view class="pull-right">
+            <label class="pull-left stock-text">库存 <text class="pay-goods-stock">{{ selectModelInfo.stock }}</text></label>
+            
+            <view class="zan-stepper zan-stepper--small pull-left">
+              <view class="zan-stepper__minus {{ selectModelInfo.buyCount <= 1 ? 'zan-stepper--disabled' : '' }}"  bindtap="clickMinusButton">-</view>
+              <input class="zan-stepper__text" type="number" value="{{ selectModelInfo.buyCount }}" bindinput="inputBuyCount" ></input>
+              <view class="zan-stepper__plus {{ selectModelInfo.buyCount >= selectModelInfo.stock ? 'zan-stepper--disabled' : '' }}"  bindtap="clickPlusButton">+</view>
+            </view>
+            
+          </view>
+        </view>
+      </view>
+
+      <view>
+        <view hidden="{{ ifAddToShoppingCart }}">
+          <view class="btn btn-block pay-buy-next" bindtap="buyDirectlyNextStep">下一步</view>
+        </view>
+        <view hidden="{{ !ifAddToShoppingCart }}">
+          <view class="btn btn-block pay-add-to-shoppingcart" bindtap="sureAddToShoppingCart">加入购物车</view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+</view>

@@ -1,0 +1,2 @@
+@import "../youzan.wxss";
+page{background-color:rgb(247, 245, 244);margin-left:auto;}

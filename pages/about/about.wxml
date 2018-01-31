@@ -1,0 +1,52 @@
+<view class="app" hidden="{{page_hidden}}">
+
+  <component-share pageQRCodeData="{{pageQRCodeData}}"></component-share>
+
+  <!--轮播图-->
+  <template name="zcCarousel">
+    <swiper indicator-dots="true" circular="true" autoplay="{{data.customFeature.autoplay}}" vertical="{{data.customFeature.vertical}}" interval="{{data.customFeature.interval*1000}}" duration="750" style="{{data.style}}">
+      <block wx:for="{{data.content}}" wx:key="">
+        <swiper-item data-event-params="{{item.eventParams}}" catchtap="{{item.eventHandler}}">
+          <image class="swiper-item" src="{{item.pic}}"/>
+          <view  wx:if="{{item.eventHandler == 'tapVideoPlayHandler'}}" class="carousel-video-play icon-play ico-moon"></view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </template>
+
+  <view class="ele-container">
+    <template is="zcCarousel" data="{{data:carousel1}}"></template>
+  </view>
+
+  <!--关于我们-->
+  <template name="zcFreeVessel3">
+    <view class="element free-vessel" style="{{data.style}}" data-event-params="{{data.eventParams}}" catchtap="{{data.eventHandler}}">
+      <template name="zcText">
+        <text class="element text" style="{{data.style}}" data-event-params="{{data.eventParams}}" catchtap="{{data.eventHandler}}">{{data.content}}</text>
+      </template>
+
+      <view class="ele-container">
+          <template is="zcText" data="{{data:data.content[0], detail_data: detail_data}}"></template>
+      </view>
+
+    </view>
+  </template>
+
+  <view class="ele-container">
+    <template is="zcFreeVessel3" data="{{data:free_vessel3, real_value:real_value, detail_data: detail_data}}"></template>
+  </view>
+
+  <!--地图-->
+  <template name="zcMap">
+    <view class="element map" data-event-params="{{data.customFeature.markers_json_str}}" catchtap="tapMapDetail" style="{{data.style}}">
+      <view class="map-mask"></view>
+      <map class="map-module" hidden="{{data.customFeature.type != 'withmap' }}" longitude="{{data.customFeature.lng}}" latitude="{{data.customFeature.lat}}" markers="{{data.customFeature.markers}}" scale="17"></map>
+      <view class="map-link">{{data.content}}</view>
+    </view>
+  </template>
+
+  <view class="ele-container">
+    <template is="zcMap" data="{{data:map4}}"></template>
+  </view>
+
+</view>

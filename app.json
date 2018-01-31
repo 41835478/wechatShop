@@ -1,0 +1,60 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/goodsDetail/goodsDetail",
+    "pages/user/user",
+    "pages/logs/logs",
+    "pages/cart/cart",
+    "pages/shop/index",
+    "pages/about/about",
+    "pages/myAddress/myAddress",
+    "pages/addAddress/addAddress",
+    "pages/myOrder/myOrder",
+    "pages/orderDetail/orderDetail"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "爱篮球",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": "true",
+    "onReachBottomDistance": "50"
+  },
+  "tabBar": {
+    "borderStyle": "white",
+    "color": "#AAAAAA",
+    "selectedColor": "#FF6767",
+    "backgroundColor": "#FAFAFA",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/index.png",
+        "selectedIconPath": "images/index2.png"
+      },
+      {
+        "pagePath": "pages/myOrder/myOrder",
+        "text": "分类",
+        "iconPath": "images/class.png",
+        "selectedIconPath": "images/class2.png"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "购物车",
+        "iconPath": "images/cart.png",
+        "selectedIconPath": "images/cart2.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "images/user.png",
+        "selectedIconPath": "images/user2.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

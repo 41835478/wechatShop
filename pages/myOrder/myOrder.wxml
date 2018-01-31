@@ -1,0 +1,79 @@
+<view class="myOrder-wrap page" id="myOrder">
+  <import src="../zan/tab/index.wxml" />
+  <template is="zan-tab" data="{{ tab: { list, selectedId, scroll, height }, componentId: 'tab1' }}"></template>
+   <loading hidden="{{loading_hidden}}">
+        加载中...
+    </loading>
+  <view class="myOrder-content-body">
+    <view class="scrollContainer">
+      <scroll-view class="myOrder-ebusiness myOrder-content-container" lower-threshold="10" scroll-y="true" bindscrolltolower="scrollToListBottom">
+        <view class="myOrder-list-wrap" wx:for="{{ orderLists }}" wx:key="">
+          <view class="dialog-block-item">
+            <text>{{ item.add_time }}</text>
+            <text wx:if="{{ item.status == 0 }}" class="pull-right myOrder-order-status">待付款</text>
+            <text wx:elif="{{ item.status == 1 }}" class="pull-right myOrder-order-status">待发货</text>
+            <text wx:elif="{{ item.status == 2 }}" class="pull-right myOrder-order-status">待收货</text>
+            <text wx:elif="{{ item.status == 3 }}" class="pull-right myOrder-order-status">待评价</text>
+            <text wx:elif="{{ item.status == 4 }}" class="pull-right myOrder-order-status">退款审核中</text>
+            <text wx:elif="{{ item.status == 5 }}" class="pull-right myOrder-order-status">正在退款中</text>
+            <text wx:elif="{{ item.status == 6 }}" class="pull-right myOrder-order-status">已完成</text>
+            <text wx:elif="{{ item.status == 7 }}" class="pull-right myOrder-order-status">已关闭</text>
+            
+          </view>
+          <!-- <view class="myOrder-franchisee-name" wx:if="{{ item.sub_shop_info.name }}">{{ item.sub_shop_info.name }}</view> -->
+          
+          <view class="myOrder-goods-list" bindtap="goToOrderDetail" data-id="{{ item.order_id }}" data-type="eBusiness">
+            <view wx:for="{{ item.goods_info }}" wx:for-item="goods" wx:key="">
+              <view class="dialog-block-item">
+                <image class="myOrder-goods-cover" src="{{ goods.cover }}"></image>
+                <view class="myOrder-goods-title">{{ goods.goods_name }}</view>
+                <view class="myOrder-goods-attr">白色 43码</view>
+                <view class="myOrder-goods-right">
+                  <view>¥ <text class="myOrder-goods-price">{{ goods.price }} </text></view>
+                  <view>×<text class="myOrder-goods-count">{{ goods.num }}</text></view>
+                </view>
+                <!-- <view wx:elif="{{ goods.is_benefit_goods }}" class="myOrder-gift-text">赠品</view> -->
+              </view>
+            </view>
+          </view>
+
+          <view class="dialog-block-item myOrder-total-item">
+            <!-- <text class="myOrder-list-count">共 {{ item.goods_num }} 件</text> -->
+            <text>合计：<text class="myOrder-pay-price">¥ {{ item.total_price }}</text></text>
+          </view>
+          <view class="myOrder-list-bottom" wx:if="{{ item.status == 0 }}">
+             <text class="btn myOrder-cancel-order" bindtap="cancelOrder" data-id="{{ item.order_id }}">取消订单</text> 
+            <text class="btn myOrder-pay-directly" bindtap="goToOrderDetail" data-id="{{ item.order_id }}" data-type="eBusiness">支付</text>
+          </view>
+          <view class="myOrder-list-bottom" wx:elif="{{ item.status == 1 }}">
+            <text class="btn myOrder-apply-drawback" bindtap="applyDrawback" data-id="{{ item.order_id }}">申请退款</text>
+          </view>
+          <view class="myOrder-list-bottom" wx:elif="{{ item.status == 2 }}">
+          <text class="btn myOrder-check-logistics" bindtap="checkLogistics" data-id="{{ item.order_id }}" wx:if="{{ item.is_self_delivery == 0}}" >查看物流</text>
+            <text class="btn myOrder-apply-drawback" bindtap="applyDrawback" data-id="{{ item.order_id }}">申请退款</text>
+            <text class="btn myOrder-sure-receipt" bindtap="sureReceipt" data-id="{{ item.order_id }}">确认收货</text>
+          </view>
+          <view class="myOrder-list-bottom" wx:elif="{{ item.status == 3 }}">
+            <text class="btn myOrder-check-logistics" bindtap="checkLogistics" data-id="{{ item.order_id }}" wx:if="{{ item.is_self_delivery == 0}}" >查看物流</text>
+            <text class="btn myOrder-make-comment" bindtap="makeComment" data-id="{{ item.order_id }}">去评价</text>
+          </view>
+          <view class="myOrder-list-bottom" wx:elif="{{ item.status == 6 }}">
+            <text class="btn myOrder-check-logistics" bindtap="checkLogistics" data-id="{{ item.order_id }}" wx:if="{{item.is_self_delivery == 0}}">查看物流</text>
+          </view>
+        </view>
+
+        <view class="loading-btn" hidden="{{hasMore != 1}}" data-compid="{{data.compId}}">
+          <!-- 加载更多 -->
+          <import src="../zan/loadmore/index.wxml" />
+          <template is="zan-loadmore" data="{{ loading: true }}"></template>
+        </view>
+
+        <view hidden="{{hasMore != 2}}">
+          <view class="deadline" style=''>———————— 我是有底线的 ————————</view>
+        </view>
+
+      </scroll-view>
+    </view>
+  </view>
+
+</view>
