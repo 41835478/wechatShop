@@ -44,17 +44,6 @@ var pageData = {
   onShow: function () {
     //app.onPageShow();
   },
-  showAddress: function() {
-    wx.navigateTo({
-      url: '/pages/myAddress/myAddress'
-    });
-  },
-  showOrder: function () {
-    console.log('2222');
-    wx.switchTab({
-      url: '/pages/myOrder/myOrder',
-    });
-  },
   userCenterTurnToPage: function (e) {
     app.userCenterTurnToPage(e);
   },

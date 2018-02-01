@@ -13,18 +13,18 @@
 
         <view class="horizontal-view">
           <view class="horizontal-router-container1">
-            <view class="zan-cell zan-cell--access" data-router="myAddress" bindtap="showAddress">
+            <view class="zan-cell zan-cell--access" data-router="myAddress" bindtap="userCenterTurnToPage">
               <label class="ico-moon icon-location"></label>
               <view class="zan-cell__bd">我的地址</view>
               <view class="zan-cell__ft"></view>
             </view>
-            <view class="zan-cell zan-cell--access" data-router="myOrder" bindtap="showOrder">
+            <view class="zan-cell zan-cell--access" data-router="myOrder" bindtap="userCenterTurnToPage">
               <label class="ico-moon icon-notebook"></label>
               <view class="zan-cell__bd">我的订单</view>
               <view class="zan-cell__ft"></view>
             </view>
 
-            <view class="zan-cell zan-cell--access" data-router="myMessage" bindtap="showMessage">
+            <view class="zan-cell zan-cell--access" data-router="myMessage" bindtap="userCenterTurnToPage">
               <label class="ico-moon icon-notify"></label>
               <view class="zan-cell__bd">系统通知</view>
               <view class="zan-cell__ft"></view>
@@ -47,12 +47,11 @@
       <view class="ele-container">
         <text class="element text" style="{{data.text_style}}">{{data.text}}</text>
       </view>
-      <button open-type="contact"> 客服 </button>
     </view>
   </template>
 
-  <view class="ele-container">
+  <!-- <view class="ele-container">
       <template is="zcFreeVessel3" data="{{data:contact}}"></template>
-  </view>
+  </view> -->
 
 </view>

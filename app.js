@@ -1,6 +1,5 @@
-//app.js
 App({
-  onLaunch: function () {
+  oLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -51,9 +50,7 @@ App({
     userInfo: {},
     systemInfo: null,
     sessionKey: '',
-    isLogin: false,
-    userInfo: null,
-    isLogin: false,
+    isLogin: true,
     locationInfo: {
       latitude: '',
       longitude: '',
@@ -66,7 +63,8 @@ App({
     siteBaseUrl: 'https://wechat.cidianpu.com',
     appTitle: '茶具淘',
     appDescription: '茶具自销',
-    appLogo: 'http://cdn.jisuapp.cn/zhichi_frontend/static/invitation/images/logo.png'
+    appLogo: 'http://cdn.jisuapp.cn/zhichi_frontend/static/invitation/images/logo.png',
+    tabBarPagePathArr: '["/pages/index/index","/pages/category/category","/pages/cart/cart","/pages/user/user"]',
   },
   getAppId: function () {
     return this.globalData.appId;
@@ -155,13 +153,19 @@ App({
       data: this.globalData.userInfo
     })
   },
+  // 菜单地址列表
+  getTabPagePathArr: function () {
+    return JSON.parse(this.globalData.tabBarPagePathArr);
+  },
   // url跳转
   turnToPage: function (url, isRedirect) {
+    console.log(url);
     var tabBarPagePathArr = this.getTabPagePathArr();
     if (tabBarPagePathArr.indexOf(url) != -1) {
       this.switchToTab(url);
       return;
     }
+    console.log(isRedirect);
     if (!isRedirect) {
       wx.navigateTo({
         url: url
@@ -865,26 +869,9 @@ App({
   _userCenterToPage: function (event) {
     let dataset = event.currentTarget.dataset;
     let router = dataset.router;
-    let openVerifyPhone = dataset.openVerifyPhone;
-    let that = this;
-    let goodsType = dataset.goodsType;
-    let currentIndex = event.target.dataset.index;
+    console.log(dataset.router);
 
-    if (router === 'userCenter' && this.isLogin() !== true) {
-      this.goLogin({
-        success: function () {
-          that.turnToPage('/pages/' + router + '/' + router + '?from=userCenterEle');
-        }
-      })
-      return;
-    }
-
-    if (router === 'myOrder' && goodsType != undefined) {
-      this.turnToPage('/pages/' + router + '/' + router + '?from=userCenterEle&goodsType=' + goodsType + '&currentIndex=' + currentIndex);
-        return;
-    }
-    this.turnToPage('/pages/' + router + '/' + router + '?from=userCenterEle');
-    
+    this.turnToPage('/pages/' + router + '/' + router + '?from=userCenter');
   },
   // session key
   _sendSessionKey: function (options) {
